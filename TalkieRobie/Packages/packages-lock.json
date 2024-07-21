@@ -135,6 +135,13 @@
       },
       "url": "https://packages.unity.com"
     },
+    "sienar.unity.core": {
+      "version": "https://gitlab.com/sienar.framework/sienar.unity.core.git?path=/Assets/Sienar.Unity.Core",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "7699209bcaa043ad8f876e90e0cfa9cf068e9787"
+    },
     "com.unity.modules.ai": {
       "version": "1.0.0",
       "depth": 0,
