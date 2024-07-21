@@ -69,15 +69,17 @@
     <Compile Include="Assets\Scripts\DataCenter\CustomData.cs" />
     <Compile Include="Assets\Scripts\Managers\PlayerPrefsData.cs" />
     <Compile Include="Assets\Scripts\Installer\TalkieRobieInstaller.cs" />
-    <Compile Include="Assets\Scripts\DataCenter\VoiceManager.cs" />
     <Compile Include="Assets\test.cs" />
     <Compile Include="Assets\Scripts\Notification\Notification.cs" />
     <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
     <Compile Include="Assets\Scripts\Notification\NotificationPanel.cs" />
     <Compile Include="Assets\Scripts\Account\DeviceID.cs" />
+    <Compile Include="Assets\Scripts\DataCenter\ExternalManager.cs" />
     <Compile Include="Assets\Scripts\Managers\Crypto.cs" />
     <Compile Include="Assets\Scripts\Notification\NotificationCanvas.cs" />
+    <Compile Include="Assets\Scripts\Game\GameLogic.cs" />
     <Compile Include="Assets\Scripts\Menu\Difficulty\DifficultyPanel.cs" />
+    <Compile Include="Assets\Scripts\Loading\MenuLoader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

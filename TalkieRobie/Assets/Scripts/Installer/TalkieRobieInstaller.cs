@@ -14,7 +14,7 @@ namespace Sienar.TalkieRobie.Installer
 
             DependencyContext.Bind<LoginManager>();
             DependencyContext.Bind<PlayfabDataManager>();
-            DependencyContext.Bind<VoiceManager>();
+            DependencyContext.Bind<ExternalManager>();
         }
     }
 }

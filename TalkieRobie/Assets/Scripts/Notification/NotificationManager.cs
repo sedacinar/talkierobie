@@ -30,6 +30,10 @@ namespace Sienar.TalkieRobie.Notification
             {
                 txt = "Audio Data Cannot Found!";
             }
+            else if (notificationType == NotificationType.ImageError)
+            {
+                txt = "Image Data Cannot Found!";
+            }
             return txt;
         }
     }

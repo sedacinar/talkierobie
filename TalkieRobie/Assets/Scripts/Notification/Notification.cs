@@ -4,6 +4,7 @@ namespace Sienar.TalkieRobie.Notification
     {
         LoginError,
         CatalogError,
-        AudioError
+        AudioError,
+        ImageError
     }
 }

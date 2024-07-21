@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 namespace Sienar.TalkieRobie.DataCenter
 {
     [Serializable]
@@ -12,6 +13,6 @@ namespace Sienar.TalkieRobie.DataCenter
         public string Hint { get; set; }
         public AudioClip AudioClip { get; set; }
 
-        public Sprite   Image { get; set; }
+        public Texture2D   Image { get; set; }
     }
 }

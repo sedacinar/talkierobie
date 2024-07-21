@@ -17,7 +17,10 @@ namespace Sienar.TalkieRobie.Managers
             catalogModels = catalogs;
             onLoadData?.Invoke(catalogModels);
         }
-
+        public List<CatalogModel> GetCatalog() 
+        {
+            return catalogModels;
+        }
         public void BindOnLoadData(GameManagerEvent gameManager)
         {
             if (gameManager == null)
