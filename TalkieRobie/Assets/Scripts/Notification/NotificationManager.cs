@@ -22,6 +22,14 @@ namespace Sienar.TalkieRobie.Notification
                 txt = "Login Error!";
                 return txt;
             }
+            else if(notificationType == NotificationType.CatalogError) 
+            {
+                txt = "Level Data Cannot Get!";
+            }
+            else if (notificationType == NotificationType.AudioError)
+            {
+                txt = "Audio Data Cannot Found!";
+            }
             return txt;
         }
     }

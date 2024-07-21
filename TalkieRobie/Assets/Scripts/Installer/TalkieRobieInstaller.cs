@@ -1,4 +1,5 @@
 using Sienar.TalkieRobie.Account;
+using Sienar.TalkieRobie.DataCenter;
 using Sienar.TalkieRobie.Notification;
 using Sienar.Unity.Core.Zenject.Core;
 namespace Sienar.TalkieRobie.Installer
@@ -12,6 +13,8 @@ namespace Sienar.TalkieRobie.Installer
             DependencyContext.Bind<NotificationManager>();
 
             DependencyContext.Bind<LoginManager>();
+            DependencyContext.Bind<PlayfabDataManager>();
+            DependencyContext.Bind<VoiceManager>();
         }
     }
 }
