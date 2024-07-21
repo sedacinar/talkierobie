@@ -1,4 +1,5 @@
 using Sienar.TalkieRobie.Account;
+using Sienar.TalkieRobie.Notification;
 using Sienar.Unity.Core.Zenject.Core;
 namespace Sienar.TalkieRobie.Installer
 {
@@ -8,6 +9,8 @@ namespace Sienar.TalkieRobie.Installer
         {
             base.InstallBindings();
             DependencyContext.Bind<DeviceID>();
+            DependencyContext.Bind<NotificationManager>();
+
             DependencyContext.Bind<LoginManager>();
         }
     }

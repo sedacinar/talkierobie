@@ -2,6 +2,7 @@ using PlayFab;
 using UnityEngine;
 using PlayFab.ClientModels;
 using Sienar.Unity.Core.Zenject.Core;
+using Sienar.TalkieRobie.Notification;
 namespace Sienar.TalkieRobie.Account
 {
     public class LoginManager : MonoBehaviour
@@ -11,9 +12,12 @@ namespace Sienar.TalkieRobie.Account
 
         string deviceID;
         DeviceID deviceSettings;
+        NotificationManager notification;
         private void Start()
         {
             deviceSettings = DependencyContext.Get<DeviceID>();
+            notification = DependencyContext.Get<NotificationManager>();
+
             deviceID = deviceSettings.GetDeviceID();
 
             LoginWithDevice(deviceID);
@@ -36,7 +40,8 @@ namespace Sienar.TalkieRobie.Account
         }
         void OnError(PlayFabError result)
         {
-
+            Debug.LogError("Login failed!");
+            notification.Show(NotificationType.LoginError);
         }
 
         public void BindOnLogin(LoginEvent login)

@@ -5,7 +5,7 @@ using Sienar.Unity.Core.Scene;
 using Sienar.TalkieRobie.Account;
 using Sienar.Unity.Core.Zenject.Core;
 using Sienar.Unity.Core.Scene.Interface;
-namespace Sienar.Unity.TalkieRobie.Loading
+namespace Sienar.TalkieRobie.Loading
 {
     public class LoadingProgress : MonoBehaviour
     {
@@ -40,7 +40,7 @@ namespace Sienar.Unity.TalkieRobie.Loading
             {
                 float progressValue = Mathf.Clamp01(op.progress / 0.9f);
                 fill.fillAmount = progressValue;
-                yield return null;
+                yield return new WaitForSecondsRealtime(1f);
             }
         }
     }
