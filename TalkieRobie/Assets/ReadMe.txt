@@ -1,0 +1,2 @@
+Proje PlayfabSdk ve kendi yazmış olduğum sienar.unity.core paketine bağımlıdır. 
+Projede run time'da veri çekmektedir. Playfab üzerinden alınan url'ler hostumda barındırdığım image ve voicelerı çekmektedir. Playfab'a login id ve leaderboard skor gönderilmektedir.
