@@ -1,3 +1,4 @@
+using Sienar.TalkieRobie.DataCenter;
 using Sienar.Unity.Core.Scene.Interface;
 using Sienar.Unity.Core.Zenject.Core;
 using System.Collections;
@@ -17,14 +18,18 @@ namespace Sienar.TalkieRobie.Game
         GameObject GameOverPanel;
 
         ISceneLoader sceneLoader;
+        PlayfabDataManager dataManager;
 
         private void Start()
         {
             sceneLoader = DependencyContext.Get<ISceneLoader>();
+            dataManager = DependencyContext.Get<PlayfabDataManager>();
         }
 
         public void FinishStats(int correct, int wrong)
         {
+            dataManager.SendLeaderboard(correct);
+
             StartCoroutine(Finish());
             CorrectSkor.text = correct.ToString();
             WrongSkor.text = wrong.ToString();

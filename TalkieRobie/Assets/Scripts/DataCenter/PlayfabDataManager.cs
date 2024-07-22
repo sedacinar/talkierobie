@@ -1,17 +1,20 @@
 using PlayFab;
 using UnityEngine;
+using Newtonsoft.Json;
 using PlayFab.ClientModels;
 using System.Collections.Generic;
-using Sienar.Unity.Core.Zenject.Core; 
+using Sienar.Unity.Core.Zenject.Core;
 using Sienar.TalkieRobie.Notification;
 using Sienar.TalkieRobie.Menu.Difficulty;
-using Newtonsoft.Json;
+using PlayFab.MultiplayerModels;
 namespace Sienar.TalkieRobie.DataCenter
 {
     public class PlayfabDataManager : MonoBehaviour
     {
-        public delegate void PlayfabDataEvent(List<CatalogModel> catalogModel);
-        event PlayfabDataEvent onLoadCatalog;
+        public delegate void CatalogEvent(List<CatalogModel> catalogModel);
+        public delegate void LeaderboardEvent(List<LeaderboardModel> leaderboardModel);
+        event CatalogEvent onLoadCatalog;
+        event LeaderboardEvent onLoadLeaderboard;
 
         List<CatalogModel> catalogs;
         NotificationManager notification;
@@ -19,6 +22,7 @@ namespace Sienar.TalkieRobie.DataCenter
         {
             notification = DependencyContext.Get<NotificationManager>();
         }
+        #region Catalog
         public void GetCatalogsData(Difficulty difficulty)
         {
             var request = new GetCatalogItemsRequest
@@ -44,7 +48,7 @@ namespace Sienar.TalkieRobie.DataCenter
 
                 catalogs.Add(catalogItem);
             }
-            if(catalogs != null) 
+            if (catalogs.Count > 0)
             {
                 onLoadCatalog?.Invoke(catalogs);
             }
@@ -56,18 +60,87 @@ namespace Sienar.TalkieRobie.DataCenter
             notification.Show(NotificationType.CatalogError);
         }
 
-        public void BindOnLoadCatalog(PlayfabDataEvent dataEvent)
+        public void BindOnLoadCatalog(CatalogEvent dataEvent)
         {
-            if(dataEvent == null)
+            if (dataEvent == null)
                 return;
             onLoadCatalog += dataEvent;
         }
-        public void UnBindOnLoadCatalog(PlayfabDataEvent dataEvent)
+        public void UnBindOnLoadCatalog(CatalogEvent dataEvent)
         {
-            if(dataEvent == null)
-                return ;
+            if (dataEvent == null)
+                return;
             onLoadCatalog -= dataEvent;
         }
+        #endregion
 
+        #region LeaderBoard
+        public void SendLeaderboard(int score)
+        {
+            var statistic = new StatisticUpdate();
+            statistic.StatisticName = "Board";
+            statistic.Value = score;
+
+            var request = new UpdatePlayerStatisticsRequest { Statistics = new List<StatisticUpdate> { statistic } };
+            
+            PlayFabClientAPI.UpdatePlayerStatistics(request, OnLeaderboardUpdateSuccess, OnLeaderboardUpdateFailure);
+        }
+        private void OnLeaderboardUpdateSuccess(UpdatePlayerStatisticsResult result)
+        {
+            Debug.Log("Leaderboard update successful!");
+        }
+
+        private void OnLeaderboardUpdateFailure(PlayFabError error)
+        {
+            Debug.LogError("Leaderboard update failed: " + error.GenerateErrorReport());
+        }
+
+        public void GetLeaderboard()
+        {
+            var request = new GetLeaderboardRequest
+            {
+                StatisticName = "Board",
+                StartPosition = 0,
+                MaxResultsCount = 10
+            };
+
+            PlayFabClientAPI.GetLeaderboard(request, OnGetLeaderboardSuccess, OnGetLeaderboardFailure);
+        }
+        private void OnGetLeaderboardSuccess(GetLeaderboardResult result)
+        {
+            Debug.Log("Leaderboard data retrieved successfully!");
+            List<LeaderboardModel> leaderboardList = new List<LeaderboardModel>();
+            foreach (var item in result.Leaderboard)
+            {
+                LeaderboardModel modelItem = new LeaderboardModel();
+                modelItem.Position = item.Position;
+                modelItem.Name = item.PlayFabId;
+                modelItem.Skor = item.StatValue;
+                leaderboardList.Add(modelItem);
+            }
+            if(leaderboardList.Count > 0) 
+            {
+                onLoadLeaderboard.Invoke(leaderboardList);
+            }
+        }
+
+        private void OnGetLeaderboardFailure(PlayFabError error)
+        {
+            Debug.LogError("Failed to retrieve leaderboard data: " + error.GenerateErrorReport());
+        }
+
+        public void BindOnLoadLeaderboard(LeaderboardEvent leaderboard)
+        {
+            if (leaderboard == null)
+                return;
+            onLoadLeaderboard += leaderboard;
+        }
+        public void UnBindOnLoadLeaderboard(LeaderboardEvent leaderboard)
+        {
+            if (leaderboard == null)
+                return;
+            onLoadLeaderboard -= leaderboard;
+        }
+        #endregion
     }
 }

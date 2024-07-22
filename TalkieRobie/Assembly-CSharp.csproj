@@ -62,13 +62,16 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Loading\LoadingProgress.cs" />
     <Compile Include="Assets\Scripts\Game\GameOver.cs" />
+    <Compile Include="Assets\Scripts\Menu\LB\LBManager.cs" />
     <Compile Include="Assets\Scripts\Menu\Difficulty\Difficulty.cs" />
     <Compile Include="Assets\Scripts\DataCenter\PlayfabDataManager.cs" />
+    <Compile Include="Assets\Scripts\Menu\LB\LBItem.cs" />
     <Compile Include="Assets\Scripts\Game\HintPanel.cs" />
     <Compile Include="Assets\Scripts\Notification\NotificationManager.cs" />
     <Compile Include="Assets\Scripts\DataCenter\CatalogModel.cs" />
     <Compile Include="Assets\Scripts\Account\LoginManager.cs" />
     <Compile Include="Assets\Scripts\DataCenter\CustomData.cs" />
+    <Compile Include="Assets\Scripts\DataCenter\LeaderboardModel.cs" />
     <Compile Include="Assets\Scripts\Game\Options.cs" />
     <Compile Include="Assets\Scripts\Managers\PlayerPrefsData.cs" />
     <Compile Include="Assets\Scripts\Installer\TalkieRobieInstaller.cs" />

@@ -1,8 +1,8 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Sienar.TalkieRobie.DataCenter;
 using Sienar.Unity.Core.Zenject.Core;
-using TMPro;
 namespace Sienar.TalkieRobie.Menu.Difficulty
 {
     public class DifficultyPanel : MonoBehaviour
