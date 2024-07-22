@@ -14,34 +14,51 @@ namespace Sienar.TalkieRobie.Game
         RawImage AnswerImage;
 
         AudioSource source;
-        OptionModel answer;   
+        OptionModel answer;
         Options optionComponent;
 
         List<OptionModel> options;
         List<CatalogModel> allData;
+
+        GameOver gameOver;
+        HintLogic hintLogic;
         CompositeDisposable disposables;
 
         int index = 0;
+        int wrong = 0;
+        int correct = 0;
         private void Start()
         {
             options = new List<OptionModel>();
             disposables = new CompositeDisposable();
 
+            gameOver = FindObjectOfType<GameOver>();
+            hintLogic = FindObjectOfType<HintLogic>();
             optionComponent = FindObjectOfType<Options>();
             source = GetComponentInChildren<AudioSource>();
-            
+
             allData = GameManager.Instance.GetCatalog();
-            SienarMessageBus.OnEvent<AnswerEvent>().Subscribe(ev => 
+            SienarMessageBus.OnEvent<AnswerEvent>().Subscribe(ev =>
             {
-                if(index < allData.Count) 
+                hintLogic.HideHint();
+                if (index < allData.Count)
                 {
+
                     StartCoroutine(WaitedCreation());
                 }
-                else 
+                else
                 {
-                    FinishGame();
+                    StartCoroutine(FinishGame());
                 }
-              
+                if (ev.IsCorrect)
+                {
+                    correct++;
+                }
+                else
+                {
+                    wrong++;
+                }
+
             }).AddTo(disposables);
 
             CreateQuestion();
@@ -53,7 +70,7 @@ namespace Sienar.TalkieRobie.Game
         void CreateQuestion()
         {
             List<CatalogModel> creationList = new List<CatalogModel>();
-            foreach(var item in allData) 
+            foreach (var item in allData)
             {
                 creationList.Add(item);
             }
@@ -62,17 +79,19 @@ namespace Sienar.TalkieRobie.Game
             answer.CatalogModel = allData[index];
             answer.IsCorrect = true;
 
+            hintLogic.SetHint(answer.CatalogModel.Hint);
+           
             options.Add(answer);
             creationList.RemoveAt(index);
 
-            for(int i = 0; i < 3; i++) 
+            for (int i = 0; i < 3; i++)
             {
                 var wrongAnswerIndex = RandomIndex(creationList.Count);
 
                 OptionModel optionModel = new OptionModel();
                 optionModel.CatalogModel = creationList[wrongAnswerIndex];
                 optionModel.IsCorrect = false;
-                
+
                 options.Add(optionModel);
                 creationList.RemoveAt(wrongAnswerIndex);
             }
@@ -82,7 +101,7 @@ namespace Sienar.TalkieRobie.Game
             AnswerImage.texture = answer.CatalogModel.Image;
             source.clip = answer.CatalogModel.AudioClip;
             source.Play();
-            index ++;
+            index++;
         }
         IEnumerator WaitedCreation()
         {
@@ -95,9 +114,11 @@ namespace Sienar.TalkieRobie.Game
             return index;
         }
 
-        void FinishGame()
+        IEnumerator FinishGame()
         {
-            Debug.LogError("FinishGame");
+            hintLogic.StopTimer();
+            yield return new WaitForSeconds(3);
+            gameOver.FinishStats(correct, wrong);
         }
     }
 }

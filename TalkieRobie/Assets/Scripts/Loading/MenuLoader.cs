@@ -14,7 +14,7 @@ namespace Sienar.TalkieRobie.Loading
             GameManager.Instance.BindOnLoadData(LoadGameScene);
             sceneLoader = DependencyContext.Get<ISceneLoader>();
         }
-        void OnDestroy () 
+        private void OnDestroy()
         {
             GameManager.Instance.UnBindOnLoadData(LoadGameScene);
         }

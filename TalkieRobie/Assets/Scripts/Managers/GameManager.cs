@@ -29,7 +29,7 @@ namespace Sienar.TalkieRobie.Managers
         }
         public void UnBindOnLoadData(GameManagerEvent gameManager)
         {
-            if (gameObject != null)
+            if (gameObject == null)
                 return;
             onLoadData -= gameManager;
         }
